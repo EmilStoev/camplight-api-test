@@ -43,3 +43,7 @@ def correct_errors():
     write(redis_client=redis_client, original_prompt=prompt, fixed_prompt=response)  # Write to redis for future reference
 
     return {"sentence": response}
+
+
+if __name__ == "__main__":
+    app.run(port=8000)

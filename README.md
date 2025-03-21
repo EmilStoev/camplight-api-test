@@ -1,28 +1,58 @@
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fvercel%2Fexamples%2Ftree%2Fmain%2Fpython%2Fflask3&demo-title=Flask%203%20%2B%20Vercel&demo-description=Use%20Flask%203%20on%20Vercel%20with%20Serverless%20Functions%20using%20the%20Python%20Runtime.&demo-url=https%3A%2F%2Fflask3-python-template.vercel.app%2F&demo-image=https://assets.vercel.com/image/upload/v1669994156/random/flask.png)
+# Camplight API
 
-# Flask + Vercel
+This is a simple API with an LLM application. It receives a sentence which may have grammatical errors and returns a
+fixed sentence with no errors.
 
-This example shows how to use Flask 3 on Vercel with Serverless Functions using the [Python Runtime](https://vercel.com/docs/concepts/functions/serverless-functions/runtimes/python).
+# Example Input
 
-## Demo
+production_json = \
+{\
+    "sentence": "example sentence you want to check the grammar and style"\
+}
+
+## Local JSON using dspy
+
+json = \
+{\
+"sentence": "example sentence you want to check the grammar and style",
+"implementation": "dspy" or "traditional"\
+}
+
+## URL
 
 https://flask-python-template.vercel.app/
 
-## How it Works
+## Limitations
 
-This example uses the Web Server Gateway Interface (WSGI) with Flask to enable handling requests on Vercel with Serverless Functions.
+This app was deployed using Vercel. Vercel has a limit of 250MB per function. Including 'dspy' results in exceeding
+the limit. To avoid this, the production deployment does not include 'dspy'. It still returns the expected result
+with traditional OpenAI calls.
 
 ## Running Locally
 
+Running locally allows for the user to test the 'dspy' output.
+
 ```bash
-npm i -g vercel
-vercel dev
+pip install -r requirements.txt
+pip install dspy==2.6.13
+
+python3 api/main.py
 ```
 
-Your Flask application is now available at `http://localhost:3000`.
+This will now allow you to do an POST request to `http://localhost:3000`.
 
-## One-Click Deploy
+# Evaluation
 
-Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=vercel-examples):
+For larger applications using LLMs, mlflow is a great way to track
+model improvements. A large dataset is needed but it allows for automatic
+evaluation.
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fvercel%2Fexamples%2Ftree%2Fmain%2Fpython%2Fflask3&demo-title=Flask%203%20%2B%20Vercel&demo-description=Use%20Flask%203%20on%20Vercel%20with%20Serverless%20Functions%20using%20the%20Python%20Runtime.&demo-url=https%3A%2F%2Fflask3-python-template.vercel.app%2F&demo-image=https://assets.vercel.com/image/upload/v1669994156/random/flask.png)
+In production environments, having a reliable way to track feedback and 
+user usage/satisfaction is needed. For this specific task, whenever a suggestion
+is given to the user, we need track if the user takes that suggestion or ignores it. A simple way to view it is to compare the message the user sent after the recommendation against the one provided 
+by the LLM. 
+
+Since LLMs are more difficult to evaluate than standard AI/ML solutions, I believe that using tangible feedback from users is the best option in determining whether a model is performing well.
+
+Once sufficient feedback has been collected, it can be organised into a dataset and be used in afforementioned mlflow implementation for automated testing in future releases.
+
