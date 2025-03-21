@@ -10,17 +10,9 @@ production_json = \
     "sentence": "example sentence you want to check the grammar and style"\
 }
 
-## Local JSON using dspy
-
-json = \
-{\
-"sentence": "example sentence you want to check the grammar and style",
-"implementation": "dspy" or "traditional"\
-}
-
 ## URL
 
-https://flask-python-template.vercel.app/
+https://camplight-api-test.vercel.app/
 
 ## Limitations
 
@@ -30,7 +22,7 @@ with traditional OpenAI calls.
 
 ## Running Locally
 
-Running locally allows for the user to test the 'dspy' output.
+Running locally allows for the user to test the 'dspy' output. Modification to the main.py file will be needed.
 
 ```bash
 pip install -r requirements.txt
