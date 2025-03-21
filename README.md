@@ -48,3 +48,6 @@ Since LLMs are more difficult to evaluate than standard AI/ML solutions, I belie
 
 Once sufficient feedback has been collected, it can be organised into a dataset and be used in afforementioned mlflow implementation for automated testing in future releases.
 
+# TODO
+
+Queueing was mentioned in the task description. I did not have the time to implement it and I would also like to have a chat about it since from my perspective queueing can possibly slow things down in a real-time environment.
