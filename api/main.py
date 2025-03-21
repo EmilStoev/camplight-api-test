@@ -2,9 +2,8 @@ import logging
 
 from flask import Flask, request
 
-from llm import get_llm_response, get_openai_client
-from cache import redis_connection, write, read
-from dspy_implementation import dspy_prediction, configure
+from api.llm import get_llm_response, get_openai_client
+from api.cache import redis_connection, write, read
 
 
 app = Flask(__name__)
@@ -26,19 +25,9 @@ def correct_errors():
         logging.info("Question already asked!")
         return {"sentence": existing_response}
 
-    method = request.get_json().get("implementation", "traditional")
+    client = get_openai_client()
 
-    if method == "traditional":
-        client = get_openai_client()
-
-        response = get_llm_response(query=prompt, client=client)
-
-    elif method == "dspy":
-        configure()
-        response = dspy_prediction(query=prompt)
-
-    else:
-        raise ValueError("method variable can only be 'traditional' or 'dspy'.")
+    response = get_llm_response(query=prompt, client=client)
 
     write(redis_client=redis_client, original_prompt=prompt, fixed_prompt=response)  # Write to redis for future reference
 
