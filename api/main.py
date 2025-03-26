@@ -12,7 +12,7 @@ logger = logging.Logger(__name__)
 logger.setLevel(logging.INFO)
 
 
-@app.route('/', methods=["POST"])
+@app.route('/', methods=["POST", "GET"])
 def correct_errors():
     redis_client = redis_connection()
 
