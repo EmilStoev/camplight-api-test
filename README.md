@@ -7,7 +7,7 @@ fixed sentence with no errors.
 
 production_json = \
 {\
-    "sentence": "example sentence you want to check the grammar and style"\
+    "prompt": "example sentence you want to check the grammar and style"\
 }
 
 ## URL
